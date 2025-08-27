@@ -15,6 +15,7 @@ void video_run(void);
 void video_enter_deb(void);
 void video_leave_deb(void);
 void video_display_buffer(void);
+void video_events(void);
 void video_setsize(int x, int y);
 void video_setpal(int num_colors, int *red, int *green, int *blue);
 char *video_get_vbp(int line);

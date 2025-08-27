@@ -282,6 +282,7 @@ struct ui_menu map14_menu[] = {
 };
 
 #include <string.h>
+#include <stdio.h>
 
 void map14_init_menu(struct mapper_14 *mapper)
 {
