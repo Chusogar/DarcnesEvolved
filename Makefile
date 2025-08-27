@@ -1,3 +1,48 @@
+# Simple Makefile to build the SDL2 frontend
+
+CC ?= cc
+CFLAGS ?= -O2 -std=c99 -Wall -Wextra
+LDFLAGS ?=
+
+# Try to get SDL2 flags via pkg-config, fallback to sdl2-config
+SDL2_CFLAGS := $(shell pkg-config --cflags sdl2 2>/dev/null)
+ifeq ($(SDL2_CFLAGS),)
+SDL2_CFLAGS := $(shell sdl2-config --cflags 2>/dev/null)
+endif
+SDL2_LIBS := $(shell pkg-config --libs sdl2 2>/dev/null)
+ifeq ($(SDL2_LIBS),)
+SDL2_LIBS := $(shell sdl2-config --libs 2>/dev/null)
+endif
+
+SRC_ALL := $(wildcard *.c)
+
+# Exclude non-SDL and Unix/X/Allegro backends
+EXCLUDE := ui_x.c ui_allegro.c video_allegro.c video_svga.c snd_unix.c
+
+SRC := $(filter-out $(EXCLUDE),$(SRC_ALL))
+OBJ := $(SRC:.c=.o)
+
+BIN := darcnes
+
+.PHONY: all clean print
+
+all: $(BIN)
+
+print:
+	@echo "CC=$(CC)"
+	@echo "CFLAGS=$(CFLAGS) $(SDL2_CFLAGS)"
+	@echo "LDFLAGS=$(LDFLAGS) $(SDL2_LIBS)"
+	@echo "SRC=$(SRC)"
+
+$(BIN): $(OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS) $(SDL2_LIBS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(SDL2_CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(OBJ) $(BIN)
+
 #
 # Makefile for DarcNES
 #
