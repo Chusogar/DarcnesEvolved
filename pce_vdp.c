@@ -15,6 +15,7 @@
 #include "tiledraw.h"
 #include "types.h"
 #include "system.h"
+#include <stdio.h>
 #define PCE_VDP_RAMSIZE 0x10000
 
 /* FIXME: these sizes may be wrong */

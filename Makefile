@@ -20,9 +20,9 @@ DEBUG=-g
 
 OPTFLAGS=-O2 -fomit-frame-pointer
 
-BASE_CFLAGS=-Wall $(DEBUG) $(OPTFLAGS) $(C_ONLY) $(BYTE_ORDER) $(MACH_TYPES) $(shell sdl-config --cflags) 
+BASE_CFLAGS=-Wall $(DEBUG) $(OPTFLAGS) $(C_ONLY) $(BYTE_ORDER) $(MACH_TYPES)
 BASE_SFLAGS=-Wall $(DEBUG) $(OPTFLAGS)
-BASE_LDFLAGS=$(shell sdl-config --libs) -lXm
+BASE_LDFLAGS=
 
 ifndef NO_MULTIPLE_COMMON_WARNING
 BASE_LDFLAGS+=-Wl,--warn-common
@@ -43,8 +43,8 @@ endif
 #
 ifeq ($(TARGET),Linux_X)
 CONFFLAGS=-DPCE_CD_SUPPORT -DSOUND
-LDFLAGS+=-L/usr/X11R6/lib -m32
-CFLAGS+=-I/usr/include/X11 -m32
+LDFLAGS+=-L/usr/X11R6/lib -m32 $(shell sdl-config --libs) -lXm
+CFLAGS+=-I/usr/include/X11 -m32 $(shell sdl-config --cflags)
 SFLAGS+=-I/usr/include/X11 -m32
 SYSTEMSRCS=video_x.c ui_x.c snd_unix.c keyboard_x.c cd_unix.c
 BINFILE=darcnes
@@ -61,6 +61,20 @@ CFLAGS+=`$(GTK_CONFIG) --cflags`
 SYSTEMSRCS=ui_gtk.c snd_unix.c cd_unix.c
 BINFILE=darcnes
 LIBS=`$(GTK_CONFIG) --libs`
+endif
+
+#
+# Flags for Windows_SDL2
+#
+ifeq ($(TARGET),Windows_SDL2)
+# Disable UNIX-specific sound/cd backends by default
+CONFFLAGS=
+# SDL2 flags
+CFLAGS+= $(shell sdl2-config --cflags)
+LDFLAGS+= $(shell sdl2-config --libs)
+SYSTEMSRCS=video_sdl2.c ui_sdl2.c
+BINFILE=darcnes.exe
+LIBS=
 endif
 
 #

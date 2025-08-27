@@ -592,3 +592,5 @@ void sega_run_common(rom_file romfile, struct sega_system *system)
  * Initial revision
  *
  */
+
+void kb_init(void);

@@ -47,7 +47,7 @@ u8 data2[32];
 u8 data3[64];
 
 
-extern joy_zero_zone_apple;
+extern int joy_zero_zone_apple;
 #define SPEAKER_BUFFER_SIZE 64
 extern u8 buffer[SPEAKER_BUFFER_SIZE];
 
@@ -56,9 +56,10 @@ u8 realstate=0;
 extern int pos;
 extern int lastpos;
 
-extern get_mouse_position_x();
-extern get_mouse_position_y();
-extern get_mouse_clicked();
+extern int get_mouse_position_x(void);
+extern int get_mouse_position_y(void);
+extern int get_mouse_clicked(void);
+void beep(int);
 
 u8 accu=0; 
  

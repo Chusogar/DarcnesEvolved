@@ -18,6 +18,9 @@
 #include "event.h"
 #include "sms_psg.h" /* FIXME: Wrong! */
 
+/* Platform keyboard init (provided by UI layer) */
+void kb_init(void);
+
 #define MSX_RAM_SIZE 0x10000
 
 /*

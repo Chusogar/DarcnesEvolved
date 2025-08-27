@@ -14,6 +14,7 @@
 #include "tool.h"
 #include "ui.h"
 #include "menu.h"
+#include <stdio.h>
 
 
 /* manifest constants */
@@ -532,7 +533,7 @@ struct apple2_card *apple2_disk_init(struct apple2_mainboard *apple2,char * fnam
     retval->disks[1].is_inserted = 0;
     retval->disks[1].is_readonly = 0;
     retval->disks[1].cur_track = 0;
-    a2_disk_load_disk((struct apple2_card *)retval,fname,fname2); //Joefix
+    a2_disk_load_disk(retval,fname,fname2); //Joefix
     return (struct apple2_card *)retval;
 }
 
